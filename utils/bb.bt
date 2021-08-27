@@ -1,0 +1,49 @@
+//--------------------------------------
+//--- 010 Editor v6.0.2 Binary Template
+//
+// File:
+// Author:
+// Revision:
+// Purpose:
+//--------------------------------------
+
+
+local uint32 BB_COUNT = 0;
+
+
+// filename
+typedef struct {
+    uint32  length;             // name length
+    ubyte   data[length];       // module name
+} MODULE_NAME <read=readMODULE_NAME>;
+
+
+string readMODULE_NAME(local MODULE_NAME &c) {
+    return c.data;
+}
+
+
+// filename
+typedef struct {
+    local uint32 bb_id = BB_COUNT;
+    uint32  rva;  // rva
+    uint32 foff; // file_offset
+    uint32 instr_size; // instr size
+    ubyte   instr[instr_size];       // module name
+    BB_COUNT++;
+} BB_INFO<read=readBB_INFO>;
+
+string readBB_INFO(local BB_INFO &c){
+    local string s;
+    SPrintf(s, "id:%d, rva:0x%x, foff:0x%x, instr size:0x%x", c.bb_id, c.rva, c.foff, c.instr_size);
+    return s;
+}
+
+
+uint32 rva_size <format=hex>;
+MODULE_NAME module_name;
+
+
+while(!FEof()) {
+    BB_INFO bi;
+}

@@ -1,0 +1,33 @@
+{
+  "tracer": "windbg-ext-tracer",
+  "mutator": "Vanapagan-mutator",
+  "args": [
+    "C:\\Users\\XinSai\\AppData\\Local\\Kingsoft\\WPS Office\\11.1.0.10463\\office6\\",
+    "C:\\input.ppt"
+  ],
+  "basic_block_file_path": [
+    "C:\\data\\wps-0424-bin\\wppmain.dll-bb.txt",
+    "C:\\data\\wps-0424-bin\\wppoutline.dll-bb.txt",
+    "C:\\data\\wps-0424-bin\\wpp.exe-bb.txt",
+    "C:\\data\\wps-0424-bin\\wpphtmlrw.dll-bb.txt",
+    "C:\\data\\wps-0424-bin\\kso.dll-bb.txt",
+    "C:\\data\\wps-0424-bin\\ksoapi.dll-bb.txt",
+    "C:\\data\\wps-0424-bin\\wppapi.dll-bb.txt"
+  ],
+  "coverage_module_name": [
+    "wppmain.dll",
+    "wppoutline.dll",
+    "wpp.exe",
+    "wpphtmlrw.dll",
+    "kso.dll",
+    "ksoapi.dll",
+    "wppapi.dll"
+  ],
+  "file_read_by_target": "C:\\input.ppt",
+  "manage_port": "8821",
+  "exit_basci_block_list": "0",
+  "output": "D:\\out\\",
+  "testcase": "D:\\in\\",
+  "patch_to_binary": false,
+  "resume_execution": false
+}
