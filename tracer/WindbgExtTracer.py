@@ -55,17 +55,18 @@ class WindbgExtTracer:
         self.server_sock.bind(('127.0.0.1', port))
         self.server_sock.listen(1)
 
-        if not self.debug_mode:
-            process_stdout = open(os.path.join(self.workspace, "stdout.txt"), "w")
-            stdout = process_stdout.fileno()
-            self.process = subprocess.Popen(command, shell=True, cwd=self.workspace, stdout=stdout)
-        else:
-            self.process = subprocess.Popen(command, shell=True, cwd=self.workspace)
 
         config['server_sock_port'] = port
         config['is_fuzz_mode'] = 1
         with open(os.path.join(self.workspace, "config.json"), "w") as fp:
             fp.write(json.dumps(config))
+
+        if not self.debug_mode:
+            process_stdout = open(os.path.join(self.workspace, "stdout.txt"), "w")
+            stdout = process_stdout.fileno()
+            self.process = subprocess.Popen([command, os.path.join(self.workspace, "config.json")], shell=True, cwd=self.workspace, stdout=stdout)
+        else:
+            self.process = subprocess.Popen([command, os.path.join(self.workspace, "config.json")], shell=True, cwd=self.workspace, stdout=stdout)
 
         self.client_sock, _ = self.server_sock.accept()
 
