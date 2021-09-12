@@ -3,6 +3,7 @@ from idaapi import *
 import idc
 import os
 from struct import pack, unpack
+import sys
 
 
 # Wait for analysis to end
@@ -30,8 +31,12 @@ file.write(struct.pack("<I", lastEA - base))
 
 
 data = pack("<I", len(filename)+1)
-data += filename
-data += "\x00"
+if sys.version_info >= (3, 0):
+    data += filename.encode()
+    data += b"\x00"
+else:
+    data += filename
+    data += "\x00"
 file.write(data)
 for segment_ea in Segments():
     segment = idaapi.getseg(segment_ea)
@@ -45,8 +50,8 @@ for segment_ea in Segments():
             BBcount += 1
             if block.start_ea not in allBlocks:
                 if idc.print_insn_mnem(block.start_ea) == "":
-                    print "Skipping %08X because this is not code" % (block.start_ea)
-                    print "    " + GetDisasm(block.start_ea)
+                    print("Skipping %08X because this is not code" % (block.start_ea))
+                    print("    " + GetDisasm(block.start_ea))
                     break
 
                 voff = block.start_ea - base
@@ -61,7 +66,7 @@ for segment_ea in Segments():
                 file.write(data)
                 allBlocks[block.start_ea] = True
 file.close()
-print "Discovered %d basic blocks in %d functions" % (BBcount, Fcount)
+print("Discovered %d basic blocks in %d functions" % (BBcount, Fcount))
 
 
 idc.qexit(0)
